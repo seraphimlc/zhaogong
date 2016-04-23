@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.com.dagong.mapper.ApplyLogMapper">
+  <resultMap id="BaseResultMap" type="com.dagong.pojo.ApplyLog">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="apply_id" jdbcType="VARCHAR" property="applyId" />
+    <result column="log_time" jdbcType="DATE" property="logTime" />
+    <result column="modify_user" jdbcType="VARCHAR" property="modifyUser" />
+    <result column="old_status" jdbcType="INTEGER" property="oldStatus" />
+    <result column="new_status" jdbcType="INTEGER" property="newStatus" />
+    <result column="modify_username" jdbcType="VARCHAR" property="modifyUsername" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, apply_id, log_time, modify_user, old_status, new_status, modify_username
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from applylog
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from applylog
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dagong.pojo.ApplyLog">
+    insert into applylog (id, apply_id, log_time, 
+      modify_user, old_status, new_status, 
+      modify_username)
+    values (#{id,jdbcType=VARCHAR}, #{applyId,jdbcType=VARCHAR}, #{logTime,jdbcType=DATE}, 
+      #{modifyUser,jdbcType=VARCHAR}, #{oldStatus,jdbcType=INTEGER}, #{newStatus,jdbcType=INTEGER}, 
+      #{modifyUsername,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dagong.pojo.ApplyLog">
+    insert into applylog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="applyId != null">
+        apply_id,
+      </if>
+      <if test="logTime != null">
+        log_time,
+      </if>
+      <if test="modifyUser != null">
+        modify_user,
+      </if>
+      <if test="oldStatus != null">
+        old_status,
+      </if>
+      <if test="newStatus != null">
+        new_status,
+      </if>
+      <if test="modifyUsername != null">
+        modify_username,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="applyId != null">
+        #{applyId,jdbcType=VARCHAR},
+      </if>
+      <if test="logTime != null">
+        #{logTime,jdbcType=DATE},
+      </if>
+      <if test="modifyUser != null">
+        #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="oldStatus != null">
+        #{oldStatus,jdbcType=INTEGER},
+      </if>
+      <if test="newStatus != null">
+        #{newStatus,jdbcType=INTEGER},
+      </if>
+      <if test="modifyUsername != null">
+        #{modifyUsername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dagong.pojo.ApplyLog">
+    update applylog
+    <set>
+      <if test="applyId != null">
+        apply_id = #{applyId,jdbcType=VARCHAR},
+      </if>
+      <if test="logTime != null">
+        log_time = #{logTime,jdbcType=DATE},
+      </if>
+      <if test="modifyUser != null">
+        modify_user = #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="oldStatus != null">
+        old_status = #{oldStatus,jdbcType=INTEGER},
+      </if>
+      <if test="newStatus != null">
+        new_status = #{newStatus,jdbcType=INTEGER},
+      </if>
+      <if test="modifyUsername != null">
+        modify_username = #{modifyUsername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dagong.pojo.ApplyLog">
+    update applylog
+    set apply_id = #{applyId,jdbcType=VARCHAR},
+      log_time = #{logTime,jdbcType=DATE},
+      modify_user = #{modifyUser,jdbcType=VARCHAR},
+      old_status = #{oldStatus,jdbcType=INTEGER},
+      new_status = #{newStatus,jdbcType=INTEGER},
+      modify_username = #{modifyUsername,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
