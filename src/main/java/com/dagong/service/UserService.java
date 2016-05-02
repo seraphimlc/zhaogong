@@ -29,6 +29,7 @@ public class UserService {
     private static Jedis jedisClient = new Jedis("172.16.54.144", 6379);
     private static String MESSAGE_TOPIC="user";
 
+
     @Resource
     private UserMapper userMapper;
 
@@ -52,6 +53,11 @@ public class UserService {
 
     @Resource
     private IdGenerator idGenerator;
+
+
+    public User getUserById(String userId){
+        return userMapper.selectByPrimaryKey(userId);
+    }
 
     public User register(User user) {
         user.setId(idGenerator.generate(User.class.getSimpleName()));

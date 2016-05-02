@@ -10,6 +10,17 @@
   <sql id="Base_Column_List">
     id, user_id, job_id, status
   </sql>
+
+
+  <select id="getApplyRecord" parameterType="com.dagong.pojo.ApplyRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from applyrecord
+    where 1=1
+
+  </select>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

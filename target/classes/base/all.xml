@@ -10,5 +10,6 @@
     <import resource="classpath:base/common.xml"/>
     <import resource="classpath:base/datasource.xml"/>
     <import resource="classpath:base/mq.xml"/>
+    <import resource="classpath:base/dubbo.xml"/>
 
 </beans>

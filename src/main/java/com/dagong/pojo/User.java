@@ -2,7 +2,6 @@ package com.dagong.pojo;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.Date;
 
 public class User {
     private String id;
@@ -20,7 +19,7 @@ public class User {
     private String email;
 
     @NotNull
-    private Date brithday;
+    private long brithday;
 
     @Pattern(regexp="\\d{17}([0-9]|x)")
     private String cardId;
@@ -85,11 +84,11 @@ public class User {
         this.email = email == null ? null : email.trim();
     }
 
-    public Date getBrithday() {
+    public long getBrithday() {
         return brithday;
     }
 
-    public void setBrithday(Date brithday) {
+    public void setBrithday(long brithday) {
         this.brithday = brithday;
     }
 

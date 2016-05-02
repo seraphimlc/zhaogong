@@ -70,11 +70,11 @@ public class JobController {
     public String detail(@CookieValue("userId") String userId,
                          @RequestParam("jobId") String jobId,
                          Map<String, Object> model) {
-        Map job = jobService.getJob(jobId);
-        if (job != null) {
-            model.put("job", job);
-
-        }
+//        Map job = jobService.getJob(jobId);
+//        if (job != null) {
+//            model.put("job", job);
+//
+//        }
         return "/view/jobDetail";
     }
 

@@ -9,6 +9,47 @@ public class ApplyRecord {
 
     private Integer status;
 
+    private String companyId;
+
+    private String companyUser;
+
+    private long applyTime;
+
+    private String userInfo;
+
+    public String getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(String userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
+
+    public String getCompanyUser() {
+        return companyUser;
+    }
+
+    public void setCompanyUser(String companyUser) {
+        this.companyUser = companyUser;
+    }
+
+
+    public long getApplyTime() {
+        return applyTime;
+    }
+
+    public void setApplyTime(long applyTime) {
+        this.applyTime = applyTime;
+    }
+
     public String getId() {
         return id;
     }

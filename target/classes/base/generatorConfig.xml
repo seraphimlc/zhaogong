@@ -17,7 +17,7 @@
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
-        <sqlMapGenerator targetPackage="com.dagong.mapper"
+        <sqlMapGenerator targetPackage="mapper"
                          targetProject="/Users/liuchang/Documents/workspace/projects/dagong/src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>

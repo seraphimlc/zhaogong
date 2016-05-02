@@ -49,7 +49,7 @@
                 </bean>
             </list>
         </property>
-        <property name="mapperLocations" value="classpath:com/dagong/mapper/*Mapper.xml"/>
+        <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

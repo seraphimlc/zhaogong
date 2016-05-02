@@ -1,16 +1,19 @@
 package com.dagong.service;
 
-import com.dagong.mapper.ApplyLogMapper;
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSON;
+import com.dagong.job.JobClient;
+import com.dagong.job.vo.JobVO;
 import com.dagong.mapper.ApplyRecordMapper;
-import com.dagong.mapper.JobMapper;
-import com.dagong.pojo.ApplyLog;
 import com.dagong.pojo.ApplyRecord;
-import com.dagong.pojo.Job;
+import com.dagong.pojo.User;
 import com.dagong.util.IdGenerator;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
+import java.util.List;
 
 /**
  * Created by liuchang on 16/1/17.
@@ -25,84 +28,58 @@ public class ApplyService {
     private static int STATUS_SUCCESS = 6;
     private static int STATUS_FAILED = 7;
 
-    @Resource
-    private ApplyLogMapper applyLogMapper;
+    private static final int PAGE_SIZE = 10;
 
+    @Resource
+    private UserService userService;
     @Resource
     private ApplyRecordMapper applyRecordMapper;
-
-    @Resource
-    private JobMapper jobMapper;
+    @Reference(version = "1.0.0")
+    private JobClient jobClient;
 
     @Resource
     private IdGenerator idGenerator;
 
-    public boolean apply(String userId, String companyId, String jobId) {
 
-        Job job = jobMapper.selectByPrimaryKey(jobId);
-        if (job == null || !job.getCompanyId().equals(companyId)) {
+    public boolean apply(String userId, String jobId, long applyTime) {
+        User user = userService.getUserById(userId);
+        JobVO jobVO = jobClient.getJobByJobId(jobId);
+        if (user == null || jobVO == null) {
             return false;
         }
-        ApplyRecord applyRecord = createApplyRecord(userId, jobId);
-        ApplyLog applyLog = createApplyLog(userId, null, applyRecord.getId(), applyRecord.getStatus(), applyRecord.getStatus());
-
-        applyRecordMapper.insert(applyRecord);
-        applyLogMapper.insert(applyLog);
-        return true;
-    }
-
-    public boolean read(String companyId,String applyId){
-        return updateStatus(companyId,null,applyId,STATUS_READ);
-    }
-
-    public boolean accept(String companyId,String applyId){
-        return updateStatus(companyId,null,applyId,STATUS_ACCEPT);
-    }
-    public boolean refuse(String companyId,String applyId){
-        return updateStatus(companyId,null,applyId,STATUS_REFUSE);
-    }
-
-    public boolean interview(String companyId,String applyId){
-        return updateStatus(companyId,null,applyId,STATUS_INTERVIEW);
-    }
-
-    public boolean success(String companyId,String applyId){
-        return updateStatus(companyId,null,applyId,STATUS_SUCCESS);
-    }
-    public boolean fail(String companyId,String applyId){
-        return updateStatus(companyId,null,applyId,STATUS_FAILED);
-    }
-
-    private boolean updateStatus(String companyUserId,String companyUserName,String applyId,int status){
-        ApplyRecord applyRecord = applyRecordMapper.selectByPrimaryKey(applyId);
-        ApplyRecord newApplyRecord = new ApplyRecord();
-        newApplyRecord.setId(applyId);
-        newApplyRecord.setStatus(status);
-        ApplyLog applyLog = createApplyLog(companyUserId,companyUserName,applyId,applyRecord.getStatus(),newApplyRecord.getStatus());
-        applyRecordMapper.updateByPrimaryKeySelective(newApplyRecord);
-        applyLogMapper.insert(applyLog);
-        return true;
-    }
-
-    private ApplyLog createApplyLog(String userId, String userName, String applyId, int oldStatus, int newStatus) {
-        ApplyLog applyLog = new ApplyLog();
-        applyLog.setId(idGenerator.generate(ApplyLog.class.getSimpleName()));
-        applyLog.setLogTime(new Date());
-        applyLog.setApplyId(applyId);
-        applyLog.setModifyUser(userId);
-        applyLog.setModifyUser(userName);
-        applyLog.setNewStatus(newStatus);
-        applyLog.setOldStatus(oldStatus);
-        return applyLog;
-    }
-
-    private ApplyRecord createApplyRecord(String userId, String jobId) {
         ApplyRecord applyRecord = new ApplyRecord();
-        applyRecord.setStatus(STATUS_INIT);
+        applyRecord.setApplyTime(applyTime);
+        applyRecord.setId(idGenerator.generate(ApplyRecord.class.getSimpleName()));
         applyRecord.setUserId(userId);
         applyRecord.setJobId(jobId);
-        applyRecord.setId(idGenerator.generate(ApplyRecord.class.getSimpleName()));
-        return applyRecord;
+        applyRecord.setCompanyId(jobVO.getCompanyId());
+        applyRecord.setCompanyUser(jobVO.getCompanyUser());
+        applyRecord.setUserInfo(JSON.toJSONString(user));
+        applyRecord.setStatus(STATUS_INIT);
+        applyRecordMapper.insert(applyRecord);
+        return true;
+    }
+
+    public List<ApplyRecord> getApplyRecordForNew(String companyUserId,String jobId,int page){
+        return getApplyRecord(companyUserId,jobId,STATUS_INIT,page);
+    }
+    public List<ApplyRecord> getApplyRecordForRead(String companyUserId,String jobId,int page){
+        return getApplyRecord(companyUserId,jobId,STATUS_READ,page);
+    }
+
+    private List<ApplyRecord> getApplyRecord(String companyUserId,String jobId, int status, int page) {
+        if (page <= 0) {
+            page = 1;
+        }
+        PageHelper.startPage(page, PAGE_SIZE);
+        ApplyRecord applyRecord = new ApplyRecord();
+        applyRecord.setCompanyUser(companyUserId);
+        applyRecord.setJobId(jobId);
+        applyRecord.setStatus(status);
+
+        Page<ApplyRecord> pages = (Page<ApplyRecord>) applyRecordMapper.getApplyRecord(applyRecord);
+        return pages;
+
     }
 
 

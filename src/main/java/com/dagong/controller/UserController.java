@@ -89,7 +89,7 @@ public class UserController {
         return user.getId();
     }
 
-    private static Date convertStringToDate(String dateStr) {
+    private static long convertStringToDate(String dateStr) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
@@ -98,7 +98,7 @@ public class UserController {
             e.printStackTrace();
         }
 
-        return date;
+        return date.getTime();
     }
 
     @RequestMapping("/sendValidateCode.do")
