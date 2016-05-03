@@ -1,10 +1,15 @@
 package com.dagong.service;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.rocketmq.client.exception.MQBrokerException;
 import com.alibaba.rocketmq.client.exception.MQClientException;
 import com.alibaba.rocketmq.remoting.exception.RemotingException;
 import com.dagong.mapper.*;
 import com.dagong.pojo.*;
+import com.dagong.user.TestUserClient;
+import com.dagong.user.UserClient;
+import com.dagong.user.vo.UserVO;
+import com.dagong.user.vo.WechatUserVO;
 import com.dagong.util.BeanValidator;
 import com.dagong.util.IdGenerator;
 import com.dagong.util.ListUtil;
@@ -20,15 +25,13 @@ import java.util.List;
  * Created by liuchang on 16/1/17.
  */
 @Service
-
 public class UserService {
     private static int MAX_WANT_JOB = 5;
     private static int MAX_WANT_ENVIRONMENT = 5;
     private static int VALIDATE_CODE_LENGTH = 4;
     private static int VALIDATE_CODE_EXPIRED_TIME = 1000 * 60;
     private static Jedis jedisClient = new Jedis("172.16.54.144", 6379);
-    private static String MESSAGE_TOPIC="user";
-
+    private static String MESSAGE_TOPIC = "user";
 
     @Resource
     private UserMapper userMapper;
@@ -48,15 +51,23 @@ public class UserService {
     @Resource
     private WantInformationMapper wantInformationMapper;
 
-//    @Resource(name = "userMessageSender")
+    //    @Resource(name = "userMessageSender")
 //    private SendMessageService sendMessageService;
+    @Reference(version = "1.0.0")
+    private UserClient userClient;
+
 
     @Resource
     private IdGenerator idGenerator;
 
 
-    public User getUserById(String userId){
-        return userMapper.selectByPrimaryKey(userId);
+      public UserVO getUserById(String userId) {
+        return userClient.getUserByUserId(userId);
+    }
+
+
+    public String register(WechatUserVO userVO) {
+        return userClient.createWechatUser(userVO);
     }
 
     public User register(User user) {

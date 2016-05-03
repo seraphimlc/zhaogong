@@ -9,46 +9,15 @@ public class ApplyRecord {
 
     private Integer status;
 
+    private Long applyTime;
+
+    private String description;
+
+    private Long updateTime;
+
     private String companyId;
 
     private String companyUser;
-
-    private long applyTime;
-
-    private String userInfo;
-
-    public String getUserInfo() {
-        return userInfo;
-    }
-
-    public void setUserInfo(String userInfo) {
-        this.userInfo = userInfo;
-    }
-
-    public String getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId;
-    }
-
-    public String getCompanyUser() {
-        return companyUser;
-    }
-
-    public void setCompanyUser(String companyUser) {
-        this.companyUser = companyUser;
-    }
-
-
-    public long getApplyTime() {
-        return applyTime;
-    }
-
-    public void setApplyTime(long applyTime) {
-        this.applyTime = applyTime;
-    }
 
     public String getId() {
         return id;
@@ -80,5 +49,45 @@ public class ApplyRecord {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Long getApplyTime() {
+        return applyTime;
+    }
+
+    public void setApplyTime(Long applyTime) {
+        this.applyTime = applyTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
+    }
+
+    public Long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Long updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId == null ? null : companyId.trim();
+    }
+
+    public String getCompanyUser() {
+        return companyUser;
+    }
+
+    public void setCompanyUser(String companyUser) {
+        this.companyUser = companyUser == null ? null : companyUser.trim();
     }
 }

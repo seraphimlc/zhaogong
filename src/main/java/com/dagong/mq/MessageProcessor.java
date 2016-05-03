@@ -22,6 +22,8 @@ public abstract class MessageProcessor implements MessageListenerConcurrently{
 
     private String tag;
 
+    protected boolean isMultiThread=false;
+
 
     public String getTopic() {
         return topic;

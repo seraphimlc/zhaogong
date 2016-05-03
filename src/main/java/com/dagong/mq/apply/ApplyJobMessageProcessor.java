@@ -5,6 +5,7 @@ import com.alibaba.rocketmq.common.message.MessageExt;
 import com.dagong.mq.MessageProcessor;
 import com.dagong.service.ApplyService;
 import com.dagong.service.ExcutorService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * Created by liuchang on 16/4/24.
  */
+@Service
 public class ApplyJobMessageProcessor extends MessageProcessor {
 
     @Resource
@@ -23,9 +25,10 @@ public class ApplyJobMessageProcessor extends MessageProcessor {
     @Resource
     private ApplyService applyService;
 
+
     public ApplyJobMessageProcessor() {
         this.setTopic("apply");
-        this.setTag("applyJob");
+        this.setTag("userApplyJob");
     }
 
     @Override
@@ -36,29 +39,41 @@ public class ApplyJobMessageProcessor extends MessageProcessor {
                 String msg = new String(messageExt.getBody(), "utf-8");
                 HashMap msgMap = (HashMap) JSON.parse(msg);
                 mapList.add(msgMap);
-                processMessageByThread(mapList);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         });
+        processMessageByThread(mapList);
     }
 
     private void processMessageByThread(List<HashMap> maps) {
         List<Runnable> runnableList = new ArrayList<>();
+        if (isMultiThread && maps.size() > 1) {
+            maps.forEach(hashMap -> {
+                runnableList.add(() -> {
+                    saveApplyRecord(hashMap);
 
-        maps.forEach(hashMap -> {
-            runnableList.add(() ->{
-                    String employeeId = (String) hashMap.get("userId");
-                    String jobId = (String) hashMap.get("jobId");
-                    long applyTime = (long) hashMap.get("applyTime");
-                    applyService.apply(employeeId, jobId, applyTime);
+                });
+            });
+            if (!runnableList.isEmpty()) {
+                excutorService.excute(runnableList);
+            }
+        } else {
+            maps.forEach(hashMap -> {
+                saveApplyRecord(hashMap);
+
 
             });
-        });
-        if(!runnableList.isEmpty()){
-            excutorService.excute(runnableList);
         }
+
+
     }
 
-
+    private void saveApplyRecord(HashMap hashMap) {
+        String employeeId = (String) hashMap.get("userId");
+        String jobId = (String) hashMap.get("jobId");
+        long applyTime = (long) hashMap.get("applyTime");
+        String companyId = (String) hashMap.get("companyId");
+        applyService.apply(employeeId, jobId, companyId, applyTime);
+    }
 }

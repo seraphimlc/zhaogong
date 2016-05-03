@@ -7,6 +7,7 @@ import com.dagong.job.vo.JobVO;
 import com.dagong.mapper.ApplyRecordMapper;
 import com.dagong.pojo.ApplyRecord;
 import com.dagong.pojo.User;
+import com.dagong.user.vo.UserVO;
 import com.dagong.util.IdGenerator;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -34,17 +35,21 @@ public class ApplyService {
     private UserService userService;
     @Resource
     private ApplyRecordMapper applyRecordMapper;
-    @Reference(version = "1.0.0")
-    private JobClient jobClient;
+
+    @Resource
+    private JobService jobService;
 
     @Resource
     private IdGenerator idGenerator;
 
 
-    public boolean apply(String userId, String jobId, long applyTime) {
-        User user = userService.getUserById(userId);
-        JobVO jobVO = jobClient.getJobByJobId(jobId);
-        if (user == null || jobVO == null) {
+    public boolean apply(String userId, String jobId,String companyId, long applyTime) {
+        UserVO userVO = userService.getUserById(userId);
+        JobVO jobVO = jobService.getJob(jobId);
+        if (userVO == null || jobVO == null) {
+            return false;
+        }
+        if(!jobVO.getCompanyId().equals(companyId)){
             return false;
         }
         ApplyRecord applyRecord = new ApplyRecord();
@@ -54,7 +59,7 @@ public class ApplyService {
         applyRecord.setJobId(jobId);
         applyRecord.setCompanyId(jobVO.getCompanyId());
         applyRecord.setCompanyUser(jobVO.getCompanyUser());
-        applyRecord.setUserInfo(JSON.toJSONString(user));
+        applyRecord.setUserInfo(JSON.toJSONString(userVO));
         applyRecord.setStatus(STATUS_INIT);
         applyRecordMapper.insert(applyRecord);
         return true;
