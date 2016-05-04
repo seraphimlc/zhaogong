@@ -96,6 +96,43 @@
       </if>
     </trim>
   </insert>
+
+
+  <select id="getApplyRecord" resultMap="BaseResultMap" parameterType="com.dagong.pojo.ApplyRecord" >
+    select
+    <include refid="Base_Column_List" />
+    from applyrecord
+    where
+    <trim  suffixOverrides="and">
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR} and
+      </if>
+      <if test="jobId != null" >
+        job_id = #{jobId,jdbcType=VARCHAR} and
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER} and
+      </if>
+      <if test="applyTime != null" >
+        apply_time = #{applyTime,jdbcType=BIGINT} and
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR} and
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT} and
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=VARCHAR} and
+      </if>
+      <if test="companyUser != null" >
+        company_user = #{companyUser,jdbcType=VARCHAR}
+      </if>
+    </trim>
+
+  </select>
+
+
   <update id="updateByPrimaryKeySelective" parameterType="com.dagong.pojo.ApplyRecord" >
     update applyrecord
     <set >

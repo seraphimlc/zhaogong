@@ -19,6 +19,16 @@ public class ApplyRecord {
 
     private String companyUser;
 
+    private String userInfo;
+
+    public String getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(String userInfo) {
+        this.userInfo = userInfo;
+    }
+
     public String getId() {
         return id;
     }
