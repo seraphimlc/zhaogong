@@ -40,7 +40,6 @@ public class TestDagong {
 
    @Test
     public void test(){
-       System.out.println("jobClient = " + jobService.getJobClient());
     }
 
 //    @Test

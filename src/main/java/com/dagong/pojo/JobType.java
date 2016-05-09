@@ -1,8 +1,5 @@
 package com.dagong.pojo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class JobType {
     private Integer id;
 
@@ -11,20 +8,6 @@ public class JobType {
     private Integer parentId;
 
     private Integer level;
-
-    private List<JobType> childList = new ArrayList<>();
-
-    public void addChild(JobType jobType){
-        childList.add(jobType);
-    }
-
-    public List<JobType> getChildList() {
-        return childList;
-    }
-
-    public void setChildList(List<JobType> childList) {
-        this.childList = childList;
-    }
 
     public Integer getId() {
         return id;
@@ -56,16 +39,5 @@ public class JobType {
 
     public void setLevel(Integer level) {
         this.level = level;
-    }
-
-    @Override
-    public String toString() {
-        return "JobType{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", parentId=" + parentId +
-                ", level=" + level +
-                ", childList=" + childList +
-                '}';
     }
 }

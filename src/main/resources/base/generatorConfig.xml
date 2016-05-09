@@ -28,18 +28,18 @@
         </javaClientGenerator>
 
 
-        <table tableName="applylog" domainObjectName="ApplyLog"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
+        <!--<table tableName="applylog" domainObjectName="ApplyLog"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
 
-        </table>
-        <table tableName="applyrecord" domainObjectName="ApplyRecord"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
+        <!--</table>-->
+        <!--<table tableName="applyrecord" domainObjectName="ApplyRecord"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
 
-        </table>
+        <!--</table>-->
         <!--<table tableName="wantjob" domainObjectName="WantJob"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
@@ -82,36 +82,36 @@
                <!--selectByExampleQueryId="false">-->
 
         <!--</table>-->
-        <!--<table tableName="job_type" domainObjectName="JobType"-->
-               <!--enableCountByExample="false" enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false">-->
+        <table tableName="job_type" domainObjectName="JobType"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
 
-        <!--</table>-->
+        </table>
         <!--<table tableName="jobstatus" domainObjectName="JobStatus"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false">-->
 
         <!--</table>-->
-        <!--<table tableName="joblog" domainObjectName="JobLog"-->
-               <!--enableCountByExample="false" enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false">-->
+        <table tableName="joblog" domainObjectName="JobLog"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
 
-        <!--</table>-->
+        </table>
         <!--<table tableName="jobevaluation" domainObjectName="JobEvaluation"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false">-->
 
         <!--</table>-->
-        <!--<table tableName="job" domainObjectName="Job"-->
-               <!--enableCountByExample="false" enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false">-->
+        <table tableName="job" domainObjectName="Job"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="true"
+               selectByExampleQueryId="false">
 
-        <!--</table>-->
+        </table>
         <!--<table tableName="inviterecord" domainObjectName="InviteRecord"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->

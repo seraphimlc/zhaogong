@@ -4,14 +4,15 @@
   <resultMap id="BaseResultMap" type="com.dagong.pojo.ApplyLog">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="apply_id" jdbcType="VARCHAR" property="applyId" />
-    <result column="log_time" jdbcType="DATE" property="logTime" />
+    <result column="log_time" jdbcType="BIGINT" property="logTime" />
     <result column="modify_user" jdbcType="VARCHAR" property="modifyUser" />
     <result column="old_status" jdbcType="INTEGER" property="oldStatus" />
     <result column="new_status" jdbcType="INTEGER" property="newStatus" />
     <result column="modify_username" jdbcType="VARCHAR" property="modifyUsername" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, apply_id, log_time, modify_user, old_status, new_status, modify_username
+    id, apply_id, log_time, modify_user, old_status, new_status, modify_username, description
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -26,10 +27,10 @@
   <insert id="insert" parameterType="com.dagong.pojo.ApplyLog">
     insert into applylog (id, apply_id, log_time, 
       modify_user, old_status, new_status, 
-      modify_username)
-    values (#{id,jdbcType=VARCHAR}, #{applyId,jdbcType=VARCHAR}, #{logTime,jdbcType=DATE}, 
+      modify_username, description)
+    values (#{id,jdbcType=VARCHAR}, #{applyId,jdbcType=VARCHAR}, #{logTime,jdbcType=BIGINT}, 
       #{modifyUser,jdbcType=VARCHAR}, #{oldStatus,jdbcType=INTEGER}, #{newStatus,jdbcType=INTEGER}, 
-      #{modifyUsername,jdbcType=VARCHAR})
+      #{modifyUsername,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dagong.pojo.ApplyLog">
     insert into applylog
@@ -55,6 +56,9 @@
       <if test="modifyUsername != null">
         modify_username,
       </if>
+      <if test="description != null">
+        description,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -64,7 +68,7 @@
         #{applyId,jdbcType=VARCHAR},
       </if>
       <if test="logTime != null">
-        #{logTime,jdbcType=DATE},
+        #{logTime,jdbcType=BIGINT},
       </if>
       <if test="modifyUser != null">
         #{modifyUser,jdbcType=VARCHAR},
@@ -78,6 +82,9 @@
       <if test="modifyUsername != null">
         #{modifyUsername,jdbcType=VARCHAR},
       </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.dagong.pojo.ApplyLog">
@@ -87,7 +94,7 @@
         apply_id = #{applyId,jdbcType=VARCHAR},
       </if>
       <if test="logTime != null">
-        log_time = #{logTime,jdbcType=DATE},
+        log_time = #{logTime,jdbcType=BIGINT},
       </if>
       <if test="modifyUser != null">
         modify_user = #{modifyUser,jdbcType=VARCHAR},
@@ -101,17 +108,21 @@
       <if test="modifyUsername != null">
         modify_username = #{modifyUsername,jdbcType=VARCHAR},
       </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dagong.pojo.ApplyLog">
     update applylog
     set apply_id = #{applyId,jdbcType=VARCHAR},
-      log_time = #{logTime,jdbcType=DATE},
+      log_time = #{logTime,jdbcType=BIGINT},
       modify_user = #{modifyUser,jdbcType=VARCHAR},
       old_status = #{oldStatus,jdbcType=INTEGER},
       new_status = #{newStatus,jdbcType=INTEGER},
-      modify_username = #{modifyUsername,jdbcType=VARCHAR}
+      modify_username = #{modifyUsername,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-</mapper>
+ </mapper>

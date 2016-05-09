@@ -35,9 +35,10 @@ public class ApplyJobMessageProcessor extends MessageProcessor {
     protected void process(List<MessageExt> list) {
         List<HashMap> mapList = new ArrayList<>();
         list.forEach(messageExt -> {
+            System.out.println("messageExt = " + messageExt);
             try {
                 String msg = new String(messageExt.getBody(), "utf-8");
-                HashMap msgMap = (HashMap) JSON.parse(msg);
+                HashMap msgMap = (HashMap) JSON.parseObject(msg,HashMap.class);
                 mapList.add(msgMap);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
@@ -74,6 +75,12 @@ public class ApplyJobMessageProcessor extends MessageProcessor {
         String jobId = (String) hashMap.get("jobId");
         long applyTime = (long) hashMap.get("applyTime");
         String companyId = (String) hashMap.get("companyId");
-        applyService.apply(employeeId, jobId, companyId, applyTime);
+        String applyId = (String) hashMap.get("applyId");
+        System.out.println("employeeId = " + employeeId);
+        System.out.println("jobId = " + jobId);
+        System.out.println("applyTime = " + applyTime);
+        System.out.println("companyId = " + companyId);
+        System.out.println("applyId = " + applyId);
+        applyService.apply(applyId,employeeId, jobId, companyId, applyTime);
     }
 }

@@ -13,5 +13,7 @@ public interface JobLogMapper {
 
     int updateByPrimaryKeySelective(JobLog record);
 
+    int updateByPrimaryKeyWithBLOBs(JobLog record);
+
     int updateByPrimaryKey(JobLog record);
 }

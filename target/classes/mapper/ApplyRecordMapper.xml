@@ -6,21 +6,18 @@
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="job_id" jdbcType="VARCHAR" property="jobId" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="apply_time" jdbcType="BIGINT" property="applyTime" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+    <result column="company_user" jdbcType="VARCHAR" property="companyUser" />
+    <result column="user_info" jdbcType="VARCHAR" property="userInfo" />
+    <result column="apply_id" jdbcType="VARCHAR" property="applyId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, job_id, status
+    id, user_id, job_id, status, apply_time, description, update_time, company_id, company_user, 
+    user_info, apply_id
   </sql>
-
-
-  <select id="getApplyRecord" parameterType="com.dagong.pojo.ApplyRecord" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from applyrecord
-    where 1=1
-
-  </select>
-
-
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -33,9 +30,13 @@
   </delete>
   <insert id="insert" parameterType="com.dagong.pojo.ApplyRecord">
     insert into applyrecord (id, user_id, job_id, 
-      status)
+      status, apply_time, description, 
+      update_time, company_id, company_user, 
+      user_info, apply_id)
     values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{jobId,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER})
+      #{status,jdbcType=INTEGER}, #{applyTime,jdbcType=BIGINT}, #{description,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=BIGINT}, #{companyId,jdbcType=VARCHAR}, #{companyUser,jdbcType=VARCHAR}, 
+      #{userInfo,jdbcType=VARCHAR}, #{applyId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dagong.pojo.ApplyRecord">
     insert into applyrecord
@@ -52,6 +53,27 @@
       <if test="status != null">
         status,
       </if>
+      <if test="applyTime != null">
+        apply_time,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="companyUser != null">
+        company_user,
+      </if>
+      <if test="userInfo != null">
+        user_info,
+      </if>
+      <if test="applyId != null">
+        apply_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -65,6 +87,27 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="applyTime != null">
+        #{applyTime,jdbcType=BIGINT},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyUser != null">
+        #{companyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="userInfo != null">
+        #{userInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyId != null">
+        #{applyId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -80,6 +123,27 @@
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="applyTime != null">
+        apply_time = #{applyTime,jdbcType=BIGINT},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyUser != null">
+        company_user = #{companyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="userInfo != null">
+        user_info = #{userInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyId != null">
+        apply_id = #{applyId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -87,7 +151,54 @@
     update applyrecord
     set user_id = #{userId,jdbcType=VARCHAR},
       job_id = #{jobId,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER}
+      status = #{status,jdbcType=INTEGER},
+      apply_time = #{applyTime,jdbcType=BIGINT},
+      description = #{description,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=VARCHAR},
+      company_user = #{companyUser,jdbcType=VARCHAR},
+      user_info = #{userInfo,jdbcType=VARCHAR},
+      apply_id = #{applyId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-</mapper>
+
+ <select id="getApplyRecordByApplyId" parameterType="java.lang.String" resultMap="BaseResultMap">
+   select
+   <include refid="Base_Column_List" />
+   from applyrecord
+   where apply_id = #{applyId,jdbcType=VARCHAR}
+ </select>
+  <select id="getApplyRecord" parameterType="com.dagong.pojo.ApplyRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from applyrecord
+    where 1=1
+    <trim prefix=" and " suffixOverrides="and">
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR} and
+      </if>
+      <if test="jobId != null">
+        job_id = #{jobId,jdbcType=VARCHAR} and
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER} and
+      </if>
+      <if test="applyTime != null">
+        apply_time = #{applyTime,jdbcType=BIGINT} and
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR} and
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT} and
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=VARCHAR} and
+      </if>
+      <if test="companyUser != null">
+        company_user = #{companyUser,jdbcType=VARCHAR}
+      </if>
+    </trim>
+
+  </select>
+ </mapper>

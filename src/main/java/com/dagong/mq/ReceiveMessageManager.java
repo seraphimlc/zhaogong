@@ -29,6 +29,8 @@ public class ReceiveMessageManager {
     }
 
     private DefaultMQPushConsumer createMessageConsumer(MessageProcessor messageProcessor) throws MQClientException {
+        System.out.println("messageProcessor = " + messageProcessor.getTopic());
+        System.out.println("messageProcessor = " + messageProcessor.getTag());
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("consumber_" + UUID.randomUUID().toString());
         consumer.setNamesrvAddr(mqConfiguration.getNameSrvAddr());
         consumer.subscribe(messageProcessor.getTopic(), messageProcessor.getTag());

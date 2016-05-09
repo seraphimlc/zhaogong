@@ -21,13 +21,7 @@ public class ApplyRecord {
 
     private String userInfo;
 
-    public String getUserInfo() {
-        return userInfo;
-    }
-
-    public void setUserInfo(String userInfo) {
-        this.userInfo = userInfo;
-    }
+    private String applyId;
 
     public String getId() {
         return id;
@@ -99,5 +93,21 @@ public class ApplyRecord {
 
     public void setCompanyUser(String companyUser) {
         this.companyUser = companyUser == null ? null : companyUser.trim();
+    }
+
+    public String getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(String userInfo) {
+        this.userInfo = userInfo == null ? null : userInfo.trim();
+    }
+
+    public String getApplyId() {
+        return applyId;
+    }
+
+    public void setApplyId(String applyId) {
+        this.applyId = applyId == null ? null : applyId.trim();
     }
 }

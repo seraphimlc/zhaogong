@@ -7,6 +7,8 @@ public class JobLog {
 
     private String modifyUser;
 
+    private Integer version;
+
     private String detail;
 
     public String getId() {
@@ -31,6 +33,14 @@ public class JobLog {
 
     public void setModifyUser(String modifyUser) {
         this.modifyUser = modifyUser == null ? null : modifyUser.trim();
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     public String getDetail() {

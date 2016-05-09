@@ -37,6 +37,7 @@ public class JobController {
                             @RequestParam("contactor") String contactor,
                             @RequestParam("contact") String contact,
                             Map<String, Object> model) {
+
         return "/view/searchJobList";
     }
 
@@ -76,6 +77,13 @@ public class JobController {
 //
 //        }
         return "/view/jobDetail";
+    }
+
+    @RequestMapping("list.do")
+    public String list(@CookieValue("userId") String userId,
+                       @CookieValue("companyId") String companyId,
+                       @RequestParam("keyword") String keyword){
+        return null;
     }
 
 

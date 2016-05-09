@@ -16,24 +16,6 @@
     from job_type
     where id = #{id,jdbcType=INTEGER}
   </select>
-
-
-  <select id="selectAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from job_type order by id desc
-  </select>
-
-  <select id="selectByParentId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from job_type
-    where parent_id=#{parentId,jdbcType=INTEGER}
-    order by id asc
-  </select>
-
-
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from job_type
     where id = #{id,jdbcType=INTEGER}

@@ -1,82 +1,107 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dagong.mapper.JobLogMapper">
-  <resultMap id="BaseResultMap" type="com.dagong.pojo.JobLog">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="job_id" jdbcType="VARCHAR" property="jobId" />
-    <result column="modify_user" jdbcType="VARCHAR" property="modifyUser" />
-    <result column="detail" jdbcType="VARCHAR" property="detail" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dagong.mapper.JobLogMapper" >
+  <resultMap id="BaseResultMap" type="com.dagong.pojo.JobLog" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="job_id" property="jobId" jdbcType="VARCHAR" />
+    <result column="modify_user" property="modifyUser" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, job_id, modify_user, detail
+  <resultMap id="ResultMapWithBLOBs" type="com.dagong.pojo.JobLog" extends="BaseResultMap" >
+    <result column="detail" property="detail" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, job_id, modify_user, version
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List" >
+    detail
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from joblog
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from joblog
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.dagong.pojo.JobLog">
+  <insert id="insert" parameterType="com.dagong.pojo.JobLog" >
     insert into joblog (id, job_id, modify_user, 
-      detail)
+      version, detail)
     values (#{id,jdbcType=VARCHAR}, #{jobId,jdbcType=VARCHAR}, #{modifyUser,jdbcType=VARCHAR}, 
-      #{detail,jdbcType=VARCHAR})
+      #{version,jdbcType=INTEGER}, #{detail,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.dagong.pojo.JobLog">
+  <insert id="insertSelective" parameterType="com.dagong.pojo.JobLog" >
     insert into joblog
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="jobId != null">
+      <if test="jobId != null" >
         job_id,
       </if>
-      <if test="modifyUser != null">
+      <if test="modifyUser != null" >
         modify_user,
       </if>
-      <if test="detail != null">
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="detail != null" >
         detail,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="jobId != null">
+      <if test="jobId != null" >
         #{jobId,jdbcType=VARCHAR},
       </if>
-      <if test="modifyUser != null">
+      <if test="modifyUser != null" >
         #{modifyUser,jdbcType=VARCHAR},
       </if>
-      <if test="detail != null">
-        #{detail,jdbcType=VARCHAR},
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dagong.pojo.JobLog">
+  <update id="updateByPrimaryKeySelective" parameterType="com.dagong.pojo.JobLog" >
     update joblog
-    <set>
-      <if test="jobId != null">
+    <set >
+      <if test="jobId != null" >
         job_id = #{jobId,jdbcType=VARCHAR},
       </if>
-      <if test="modifyUser != null">
+      <if test="modifyUser != null" >
         modify_user = #{modifyUser,jdbcType=VARCHAR},
       </if>
-      <if test="detail != null">
-        detail = #{detail,jdbcType=VARCHAR},
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dagong.pojo.JobLog">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dagong.pojo.JobLog" >
     update joblog
     set job_id = #{jobId,jdbcType=VARCHAR},
       modify_user = #{modifyUser,jdbcType=VARCHAR},
-      detail = #{detail,jdbcType=VARCHAR}
+      version = #{version,jdbcType=INTEGER},
+      detail = #{detail,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dagong.pojo.JobLog" >
+    update joblog
+    set job_id = #{jobId,jdbcType=VARCHAR},
+      modify_user = #{modifyUser,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

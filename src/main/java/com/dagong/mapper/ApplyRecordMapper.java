@@ -13,6 +13,8 @@ public interface ApplyRecordMapper {
 
     ApplyRecord selectByPrimaryKey(String id);
 
+    ApplyRecord getApplyRecordByApplyId(String applyId);
+
     int updateByPrimaryKeySelective(ApplyRecord record);
 
     int updateByPrimaryKey(ApplyRecord record);

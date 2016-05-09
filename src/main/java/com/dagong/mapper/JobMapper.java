@@ -1,7 +1,7 @@
 package com.dagong.mapper;
 
 import com.dagong.pojo.Job;
-
+import com.dagong.pojo.JobExample;
 import java.util.List;
 
 public interface JobMapper {
@@ -11,11 +11,12 @@ public interface JobMapper {
 
     int insertSelective(Job record);
 
-    Job selectByPrimaryKey(String id);
+    List<Job> selectByExampleWithBLOBs(JobExample example);
 
-    List listJob(Job job);
+    List<Job> selectByExample(JobExample example);
+
+    Job selectByPrimaryKey(String id);
 
     int updateByPrimaryKeySelective(Job record);
 
-    int updateByPrimaryKey(Job record);
 }

@@ -1,8 +1,5 @@
 package com.dagong.pojo;
 
-import java.util.Date;
-import java.util.HashMap;
-
 public class Job {
     private String id;
 
@@ -10,17 +7,11 @@ public class Job {
 
     private String companyId;
 
-    private String companyName;
-
-    private String detail;
-
     private Integer needNumber;
 
-    private Date createTime;
+    private Long createTime;
 
     private Integer jobType;
-
-    private String jobTypeName;
 
     private Integer startSalary;
 
@@ -32,11 +23,11 @@ public class Job {
 
     private Integer discuss;
 
-    private Date modifyTime;
+    private Long modifyTime;
 
-    private Date startTime;
+    private Long startTime;
 
-    private Date endTime;
+    private Long endTime;
 
     private String modifyUser;
 
@@ -54,7 +45,9 @@ public class Job {
 
     private String welfare;
 
-    private HashMap<String,Object> extraProperties = new HashMap<>();
+    private Integer version;
+
+    private String detail;
 
     public String getId() {
         return id;
@@ -80,14 +73,6 @@ public class Job {
         this.companyId = companyId == null ? null : companyId.trim();
     }
 
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail == null ? null : detail.trim();
-    }
-
     public Integer getNeedNumber() {
         return needNumber;
     }
@@ -96,11 +81,11 @@ public class Job {
         this.needNumber = needNumber;
     }
 
-    public Date getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 
@@ -152,27 +137,27 @@ public class Job {
         this.discuss = discuss;
     }
 
-    public Date getModifyTime() {
+    public Long getModifyTime() {
         return modifyTime;
     }
 
-    public void setModifyTime(Date modifyTime) {
+    public void setModifyTime(Long modifyTime) {
         this.modifyTime = modifyTime;
     }
 
-    public Date getStartTime() {
+    public Long getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Long startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public Long getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Long endTime) {
         this.endTime = endTime;
     }
 
@@ -240,57 +225,19 @@ public class Job {
         this.welfare = welfare == null ? null : welfare.trim();
     }
 
-
-    public String getCompanyName() {
-        return companyName;
+    public Integer getVersion() {
+        return version;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
-    public String getJobTypeName() {
-        return jobTypeName;
+    public String getDetail() {
+        return detail;
     }
 
-    public void setJobTypeName(String jobTypeName) {
-        this.jobTypeName = jobTypeName;
-    }
-
-    public HashMap<String, Object> getExtraProperties() {
-        return extraProperties;
-    }
-
-    public void addExtraProperties(String key,Object value) {
-        this.extraProperties.put(key,value);
-    }
-
-    @Override
-    public String toString() {
-        return "Job{" +
-                "id='" + id + '\'' +
-                ", jobName='" + jobName + '\'' +
-                ", companyId='" + companyId + '\'' +
-                ", detail='" + detail + '\'' +
-                ", needNumber=" + needNumber +
-                ", createTime=" + createTime +
-                ", jobType=" + jobType +
-                ", startSalary=" + startSalary +
-                ", endSalary=" + endSalary +
-                ", bonus=" + bonus +
-                ", royalty=" + royalty +
-                ", discuss=" + discuss +
-                ", modifyTime=" + modifyTime +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", modifyUser='" + modifyUser + '\'' +
-                ", status=" + status +
-                ", address='" + address + '\'' +
-                ", contractor='" + contractor + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", degree=" + degree +
-                ", workedYear='" + workedYear + '\'' +
-                ", welfare='" + welfare + '\'' +
-                '}';
+    public void setDetail(String detail) {
+        this.detail = detail == null ? null : detail.trim();
     }
 }
