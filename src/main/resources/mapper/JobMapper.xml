@@ -99,14 +99,27 @@
             order by ${orderByClause}
         </if>
     </select>
-    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
         from job
         where id = #{id,jdbcType=VARCHAR}
     </select>
+    <select id="selectByPrimaryKeyWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+                 from job
+                 where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByPrimaryKeyOnlyBLOBs" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+        select job_id,
+        <include refid="Blob_Column_List"/>
+                 from job
+                 where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from job
     where id = #{id,jdbcType=VARCHAR}

@@ -30,8 +30,9 @@ public class JobService {
     private static int STATUS_INIT = 1;
     private static int STATUS_DEPLOY = 2;
     private static int STATUS_EXPIRED = 3;
-    private static int STATUS_CANCEL = 4;
+    private static int STATUS_STOP = 4;
     private static int STATUS_DELETE = 5;
+
     private static String TOPIC_JOB = "job";
     private static String TOPIC_UPDATE_STATUS = "updateStatus";
 
@@ -64,8 +65,13 @@ public class JobService {
     private SendMessageService sendMessageService;
 
 
-    public JobVO getJob(String jobId) {
-        return jobClient.getJobByJobId(jobId);
+    public Job getJob(String jobId) {
+        return jobMapper.selectByPrimaryKey(jobId);
+//        return jobClient.getJobByJobId(jobId);
+    }
+
+    public Job getJobDetail(String jobId){
+        return jobMapper.selectByPrimaryKeyWithBLOBs(jobId);
     }
 
     public List<JobVO> searchJob(String userId) {
@@ -192,15 +198,38 @@ public class JobService {
     }
 
 
+    public boolean addDetail(String jobId,String companyUserId,String detail){
+        Job oldJob = jobMapper.selectByPrimaryKey(jobId);
+
+        if (oldJob == null) {
+            return false;
+        }
+        Job job= new Job();
+        job.setId(jobId);
+        job.setVersion(oldJob.getVersion());
+        job.setDetail(detail);
+        job.setModifyUser(companyUserId);
+        job.setModifyTime(System.currentTimeMillis());
+        jobMapper.updateByPrimaryKeySelective(job);
+        JobLog jobLog = generateJobLog(job);
+        jobMapper.insertSelective(job);
+        jobLogMapper.insertSelective(jobLog);
+        return true;
+
+    }
+
+
+
+
     public boolean deployJob(String companyUserId, String jobId) {
 
         return modifyStatus(companyUserId, jobId, STATUS_DEPLOY);
 
     }
 
-    public boolean cancelJob(String companyUserId, String jobId) {
+    public boolean stopJob(String companyUserId, String jobId) {
 
-        return modifyStatus(companyUserId, jobId, STATUS_CANCEL);
+        return modifyStatus(companyUserId, jobId, STATUS_STOP);
     }
 
     public boolean deleteJob(String companyUserId, String jobId) {

@@ -17,6 +17,10 @@ public interface JobMapper {
 
     Job selectByPrimaryKey(String id);
 
+    Job selectByPrimaryKeyWithBLOBs(String id);
+
+    Job selectByPrimaryKeyOnlyBLOBs(String id);
+
     int updateByPrimaryKeySelective(Job record);
 
 }
