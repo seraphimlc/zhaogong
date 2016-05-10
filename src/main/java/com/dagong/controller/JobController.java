@@ -37,6 +37,7 @@ public class JobController {
                             @RequestParam("contactor") String contactor,
                             @RequestParam("contact") String contact,
                             Map<String, Object> model) {
+        jobService.createJob(userId,jobName,needNumber,jobType,null,null,null)
 
         return "/view/searchJobList";
     }

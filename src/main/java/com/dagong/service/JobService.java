@@ -32,7 +32,7 @@ public class JobService {
     private static int STATUS_EXPIRED = 3;
     private static int STATUS_CANCEL = 4;
     private static int STATUS_DELETE = 5;
-    private static String TOPIC_JOB = "apply";
+    private static String TOPIC_JOB = "job";
     private static String TOPIC_UPDATE_STATUS = "updateStatus";
 
     private int pageSize = 10;
@@ -181,8 +181,8 @@ public class JobService {
         job.setStartTime(startTime);
         job.setEndTime(endTime);
         job.setRoyalty(royalty);
-        int result=jobMapper.updateByPrimaryKeySelective(job);
-        if(result==0){
+        int result = jobMapper.updateByPrimaryKeySelective(job);
+        if (result == 0) {
             return false;
         }
         JobLog jobLog = generateJobLog(job);
@@ -190,7 +190,6 @@ public class JobService {
 
         return true;
     }
-
 
 
     public boolean deployJob(String companyUserId, String jobId) {
@@ -222,21 +221,34 @@ public class JobService {
         job.setModifyUser(companyUserId);
         job.setStatus(status);
 
-        int result=jobMapper.updateByPrimaryKeySelective(job);
-        if(result==0){
+        int result = jobMapper.updateByPrimaryKeySelective(job);
+        if (result == 0) {
             return false;
         }
         jobLogMapper.insert(generateJobLog(job));
-
+        try {
+            sendMessage(job.getId());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (RemotingException e) {
+            e.printStackTrace();
+        } catch (MQClientException e) {
+            e.printStackTrace();
+        } catch (MQBrokerException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 
-    private void sendMessage(Job job) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InterruptedException, RemotingException, MQClientException, MQBrokerException {
-        sendMessageService.sendMessage(TOPIC_JOB, TOPIC_UPDATE_STATUS, job);
+    private void sendMessage(String jobId) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InterruptedException, RemotingException, MQClientException, MQBrokerException {
+        sendMessageService.sendMessage(TOPIC_JOB, TOPIC_UPDATE_STATUS, jobId);
     }
 
-//
-//
-//}
 
 }
