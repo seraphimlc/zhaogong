@@ -14,6 +14,8 @@ public interface JobMapper {
     List<Job> selectByExampleWithBLOBs(JobExample example);
 
     List<Job> selectByExample(JobExample example);
+    List<Job> searchJob(String companyId,int status);
+
 
     Job selectByPrimaryKey(String id);
 

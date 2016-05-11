@@ -44,6 +44,11 @@ public class InviteService {
     @Resource
     private IdGenerator idGenerator;
 
+
+    public InviteRecord getInviteRecord(String inviteId){
+        return inviteRecordMapper.selectByPrimaryKey(inviteId);
+    }
+
     public boolean invite(String companyUserId, String userId, String jobId, String contactId, String comment, Date interviewTime) {
         CompanyUser companyUser = companyUserMapper.selectByPrimaryKey(companyUserId);
         if (companyUser == null) {

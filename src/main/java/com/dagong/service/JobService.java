@@ -14,6 +14,7 @@ import com.dagong.mq.SendMessageService;
 import com.dagong.pojo.Job;
 import com.dagong.pojo.JobLog;
 import com.dagong.util.IdGenerator;
+import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -37,9 +38,6 @@ public class JobService {
     private static String TOPIC_UPDATE_STATUS = "updateStatus";
 
     private int pageSize = 10;
-
-    @Reference(version = "1.0.0")
-    private JobClient jobClient;
 
 
     @Resource
@@ -70,18 +68,9 @@ public class JobService {
 //        return jobClient.getJobByJobId(jobId);
     }
 
-    public Job getJobDetail(String jobId){
+    public Job getJobDetail(String jobId) {
         return jobMapper.selectByPrimaryKeyWithBLOBs(jobId);
     }
-
-    public List<JobVO> searchJob(String userId) {
-        return jobClient.getRecommendFromUser(userId);
-    }
-
-    public void getRecommendFromUser(String userId) {
-        jobClient.getRecommendFromUser(userId);
-    }
-
 
     public boolean createJob(String companyUserId, String jobName,
                              Integer needNumber, Integer jobType,
@@ -98,8 +87,14 @@ public class JobService {
         jobMapper.insertSelective(job);
         jobLogMapper.insertSelective(jobLog);
         return true;
+    }
 
-
+    public List<Job> searchJob(String companyId, int status,int page) {
+        if(page<=0){
+            page=1;
+        }
+        PageHelper.startPage(page,pageSize);
+        return jobMapper.searchJob(companyId, status);
     }
 
     private JobLog generateJobLog(Job job) {
@@ -198,13 +193,13 @@ public class JobService {
     }
 
 
-    public boolean addDetail(String jobId,String companyUserId,String detail){
+    public boolean addDetail(String jobId, String companyUserId, String detail) {
         Job oldJob = jobMapper.selectByPrimaryKey(jobId);
 
         if (oldJob == null) {
             return false;
         }
-        Job job= new Job();
+        Job job = new Job();
         job.setId(jobId);
         job.setVersion(oldJob.getVersion());
         job.setDetail(detail);
@@ -217,8 +212,6 @@ public class JobService {
         return true;
 
     }
-
-
 
 
     public boolean deployJob(String companyUserId, String jobId) {

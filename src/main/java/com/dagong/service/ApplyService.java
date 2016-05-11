@@ -4,12 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.rocketmq.client.exception.MQBrokerException;
 import com.alibaba.rocketmq.client.exception.MQClientException;
 import com.alibaba.rocketmq.remoting.exception.RemotingException;
-import com.dagong.job.vo.JobVO;
 import com.dagong.mapper.ApplyLogMapper;
 import com.dagong.mapper.ApplyRecordMapper;
 import com.dagong.mq.SendMessageService;
 import com.dagong.pojo.ApplyLog;
 import com.dagong.pojo.ApplyRecord;
+import com.dagong.pojo.Job;
 import com.dagong.user.vo.UserVO;
 import com.dagong.util.IdGenerator;
 import com.github.pagehelper.Page;
@@ -65,11 +65,11 @@ public class ApplyService {
             return false;
         }
         UserVO userVO = userService.getUserById(userId);
-        JobVO jobVO = jobService.getJob(jobId);
-        if (userVO == null || jobVO == null) {
+        Job job = jobService.getJob(jobId);
+        if (userVO == null || job == null) {
             return false;
         }
-        if (!jobVO.getCompanyId().equals(companyId)) {
+        if (!job.getCompanyId().equals(companyId)) {
             return false;
         }
         ApplyRecord applyRecord = new ApplyRecord();
@@ -77,12 +77,12 @@ public class ApplyService {
         applyRecord.setId(idGenerator.generate(ApplyRecord.class.getSimpleName()));
         applyRecord.setUserId(userId);
         applyRecord.setJobId(jobId);
-        applyRecord.setCompanyId(jobVO.getCompanyId());
-        applyRecord.setCompanyUser(jobVO.getCompanyUser());
+        applyRecord.setCompanyId(job.getCompanyId());
+        applyRecord.setCompanyUser(job.getModifyUser());
         applyRecord.setUserInfo(JSON.toJSONString(userVO));
         applyRecord.setStatus(STATUS_INIT);
         applyRecordMapper.insert(applyRecord);
-        applyLogMapper.insert(createApplyLog(jobVO.getCompanyUser(), applyRecord.getId(), STATUS_INIT, STATUS_INIT, null));
+        applyLogMapper.insert(createApplyLog(job.getModifyUser(), applyRecord.getId(), STATUS_INIT, STATUS_INIT, null));
         return true;
     }
 

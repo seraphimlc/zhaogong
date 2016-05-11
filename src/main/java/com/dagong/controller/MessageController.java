@@ -24,11 +24,6 @@ public class MessageController {
         return null;
     }
 
-    @RequestMapping("/getReadMessage.do")
-    public String getReadMessage(@CookieValue("userId") String userId,
-                                 @RequestParam("page") String page) {
-        return null;
-    }
 
     @RequestMapping("/readMessage.do")
     public String readMessage(@CookieValue("userId") String userId) {

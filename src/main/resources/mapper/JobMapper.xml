@@ -99,6 +99,21 @@
             order by ${orderByClause}
         </if>
     </select>
+
+
+    <select id="searchJob" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List"/>
+        from job
+        where company_id = #{companyId,jdbcType=VARCHAR}
+        <if test="status >0">
+           and status = #{status,jdbcType=INTEGER}
+        </if>
+        order by modify_time desc
+    </select>
+
+
+
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
