@@ -26,7 +26,10 @@
                              targetProject="/Users/liuchang/Documents/workspace/projects/zhaogong/src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-
+        <!--<table tableName="invitation" domainObjectName="Invitation"-->
+        <!--enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false">-->
+        <!--</table>-->
 
         <!--<table tableName="applylog" domainObjectName="ApplyLog"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
@@ -82,36 +85,36 @@
                <!--selectByExampleQueryId="false">-->
 
         <!--</table>-->
-        <table tableName="job_type" domainObjectName="JobType"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
+        <!--<table tableName="job_type" domainObjectName="JobType"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
 
-        </table>
+        <!--</table>-->
         <!--<table tableName="jobstatus" domainObjectName="JobStatus"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false">-->
 
         <!--</table>-->
-        <table tableName="joblog" domainObjectName="JobLog"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
+        <!--<table tableName="joblog" domainObjectName="JobLog"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
 
-        </table>
+        <!--</table>-->
         <!--<table tableName="jobevaluation" domainObjectName="JobEvaluation"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false">-->
 
         <!--</table>-->
-        <table tableName="job" domainObjectName="Job"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="true"
-               selectByExampleQueryId="false">
+        <!--<table tableName="job" domainObjectName="Job"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="false">-->
 
-        </table>
+        <!--</table>-->
         <!--<table tableName="inviterecord" domainObjectName="InviteRecord"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
@@ -159,7 +162,25 @@
                <!--selectByExampleQueryId="false">-->
 
         <!--</table>-->
-        <!--<table tableName="company" domainObjectName="Company"-->
+        <table tableName="company" domainObjectName="Company"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+
+        </table>
+        <!--<table tableName="company_log" domainObjectName="CompanyLog"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+
+        <!--</table>-->
+        <!--<table tableName="company_user" domainObjectName="CompanyUser"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+
+        <!--</table>-->
+        <!--<table tableName="company_user_log" domainObjectName="CompanyUserLog"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false">-->

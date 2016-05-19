@@ -57,8 +57,9 @@ public class JobController {
     @RequestMapping("addDetail.do")
     public String addDetail(@CookieValue("userId") String userId,
                             @RequestParam("jobId") String jobId,
-                            @RequestParam("detail") String detail) {
-        jobService.addDetail(jobId,userId,detail);
+                            @RequestParam("detail") String detail,
+                            @RequestParam("version") int version) {
+        jobService.addDetail(jobId,userId,detail,version);
         return null;
     }
 
@@ -83,9 +84,10 @@ public class JobController {
                             @RequestParam("welfare") String welfare,
                             @RequestParam("discuss") int discuss,
                             @RequestParam("bonus") int bonus,
+                            @RequestParam("version") int version,
                             Map<String, Object> model) {
 
-        jobService.modifyJob(jobId,userId,jobName,needNumber,jobType,null,startSalary,endSalary,royalty,bonus,discuss,address,welfare,workedYear,degree,phoneNumber,contactor,startTime,endTime);
+        jobService.modifyJob(jobId,userId,jobName,needNumber,jobType,null,startSalary,endSalary,royalty,bonus,discuss,address,welfare,workedYear,degree,phoneNumber,contactor,startTime,endTime,version);
 
         return "/view/searchJobList";
     }
@@ -93,8 +95,8 @@ public class JobController {
     @RequestMapping("modifyDetail.do")
     public String modifyDetail(@CookieValue("userId") String userId,
                             @RequestParam("jobId") String jobId,
-                            @RequestParam("detail") String detail) {
-        jobService.addDetail(jobId,userId,detail);
+                            @RequestParam("detail") String detail,@RequestParam("version")int version) {
+        jobService.addDetail(jobId,userId,detail,version);
         return null;
     }
 

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dagong.mapper.CompanyLogMapper" >
+  <resultMap id="BaseResultMap" type="com.dagong.pojo.CompanyLog" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="modify_user" property="modifyUser" jdbcType="VARCHAR" />
+    <result column="old_status" property="oldStatus" jdbcType="INTEGER" />
+    <result column="new_status" property="newStatus" jdbcType="INTEGER" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_time, company_id, modify_user, old_status, new_status, detail, version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from company_log
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from company_log
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dagong.pojo.CompanyLog" >
+    insert into company_log (id, create_time, company_id, 
+      modify_user, old_status, new_status, 
+      detail, version)
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, #{companyId,jdbcType=VARCHAR}, 
+      #{modifyUser,jdbcType=VARCHAR}, #{oldStatus,jdbcType=INTEGER}, #{newStatus,jdbcType=INTEGER}, 
+      #{detail,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dagong.pojo.CompanyLog" >
+    insert into company_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="modifyUser != null" >
+        modify_user,
+      </if>
+      <if test="oldStatus != null" >
+        old_status,
+      </if>
+      <if test="newStatus != null" >
+        new_status,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUser != null" >
+        #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="oldStatus != null" >
+        #{oldStatus,jdbcType=INTEGER},
+      </if>
+      <if test="newStatus != null" >
+        #{newStatus,jdbcType=INTEGER},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dagong.pojo.CompanyLog" >
+    update company_log
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUser != null" >
+        modify_user = #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="oldStatus != null" >
+        old_status = #{oldStatus,jdbcType=INTEGER},
+      </if>
+      <if test="newStatus != null" >
+        new_status = #{newStatus,jdbcType=INTEGER},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dagong.pojo.CompanyLog" >
+    update company_log
+    set create_time = #{createTime,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=VARCHAR},
+      modify_user = #{modifyUser,jdbcType=VARCHAR},
+      old_status = #{oldStatus,jdbcType=INTEGER},
+      new_status = #{newStatus,jdbcType=INTEGER},
+      detail = #{detail,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

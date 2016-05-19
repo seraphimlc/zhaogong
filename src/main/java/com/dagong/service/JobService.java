@@ -83,9 +83,8 @@ public class JobService {
                              long startTime, long endTime,
                              boolean isDeploy) {
         Job job = generateJob(companyUserId, jobName, needNumber, jobType, detail, startSalary, endSalary, royalty, bonus, discuss, address, welfare, workedYear, degree, phoneNumber, contractor, startTime, endTime, isDeploy);
-        JobLog jobLog = generateJobLog(job);
         jobMapper.insertSelective(job);
-        jobLogMapper.insertSelective(jobLog);
+        log(job);
         return true;
     }
 
@@ -97,14 +96,14 @@ public class JobService {
         return jobMapper.searchJob(companyId, status);
     }
 
-    private JobLog generateJobLog(Job job) {
+    private void log(Job job) {
         JobLog jobLog = new JobLog();
         jobLog.setId(idGenerator.generate(JobLog.class.getSimpleName()));
         jobLog.setJobId(job.getId());
         jobLog.setModifyUser(job.getModifyUser());
         jobLog.setDetail(job.toString());
         jobLog.setVersion(job.getVersion());
-        return jobLog;
+        jobLogMapper.insert(jobLog);
     }
 
     public Job generateJob(String companyUserId, String jobName,
@@ -157,16 +156,12 @@ public class JobService {
                              String address, String welfare,
                              String workedYear, Integer degree,
                              String phoneNumber, String contractor,
-                             long startTime, long endTime) {
-        Job oldJob = jobMapper.selectByPrimaryKey(jobId);
+                             long startTime, long endTime,int version) {
 
-        if (oldJob == null) {
-            return false;
-        }
         Job job = new Job();
-        job.setId(oldJob.getId());
+        job.setId(jobId);
         job.setJobName(StringUtils.isBlank(jobName) ? null : jobName);
-        job.setVersion(oldJob.getVersion());
+        job.setVersion(version);
         job.setDetail(StringUtils.isBlank(detail) ? null : detail);
         job.setWelfare(StringUtils.isBlank(welfare) ? null : welfare);
         job.setWorkedYear(StringUtils.isBlank(workedYear) ? null : workedYear);
@@ -186,29 +181,23 @@ public class JobService {
         if (result == 0) {
             return false;
         }
-        JobLog jobLog = generateJobLog(job);
-        jobLogMapper.insertSelective(jobLog);
-
+        log(job);
         return true;
     }
 
 
-    public boolean addDetail(String jobId, String companyUserId, String detail) {
-        Job oldJob = jobMapper.selectByPrimaryKey(jobId);
+    public boolean addDetail(String jobId, String companyUserId, String detail,int version) {
 
-        if (oldJob == null) {
-            return false;
-        }
         Job job = new Job();
         job.setId(jobId);
-        job.setVersion(oldJob.getVersion());
+        job.setVersion(version);
         job.setDetail(detail);
         job.setModifyUser(companyUserId);
         job.setModifyTime(System.currentTimeMillis());
+        job.setVersion(version);
         jobMapper.updateByPrimaryKeySelective(job);
-        JobLog jobLog = generateJobLog(job);
         jobMapper.insertSelective(job);
-        jobLogMapper.insertSelective(jobLog);
+        log(job);
         return true;
 
     }
@@ -237,17 +226,22 @@ public class JobService {
     }
 
     private boolean modifyStatus(String companyUserId, String jobId, Integer status) {
+        Job oldJob = jobMapper.selectByPrimaryKey(jobId);
+        if(oldJob==null){
+            return false;
+        }
         Job job = new Job();
         job.setId(jobId);
         job.setModifyTime(System.currentTimeMillis());
         job.setModifyUser(companyUserId);
         job.setStatus(status);
+        job.setVersion(oldJob.getVersion());
 
         int result = jobMapper.updateByPrimaryKeySelective(job);
         if (result == 0) {
             return false;
         }
-        jobLogMapper.insert(generateJobLog(job));
+       log(job);
         try {
             sendMessage(job.getId());
         } catch (IllegalAccessException e) {

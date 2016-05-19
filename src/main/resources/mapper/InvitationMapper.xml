@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dagong.mapper.InvitationMapper" >
+  <resultMap id="BaseResultMap" type="com.dagong.pojo.Invitation" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="invite_user_id" property="inviteUserId" jdbcType="VARCHAR" />
+    <result column="invite_company_id" property="inviteCompanyId" jdbcType="VARCHAR" />
+    <result column="apply_user_id" property="applyUserId" jdbcType="VARCHAR" />
+    <result column="apply_info" property="applyInfo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="invite_time" property="inviteTime" jdbcType="BIGINT" />
+    <result column="apply_time" property="applyTime" jdbcType="BIGINT" />
+    <result column="comfirm_time" property="comfirmTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, invite_user_id, invite_company_id, apply_user_id, apply_info, status, token, 
+    invite_time, apply_time, comfirm_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from invitation
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByUserId" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from invitation
+    where invite_user_id = #{userId,jdbcType=VARCHAR} and
+    invite_company_id= #{companyId,jdbcType=VARCHAR}
+    <if test="status >0" >
+    and  status = #{status,jdbcType=INTEGER}
+    </if>
+    order by invite_time asc;
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from invitation
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dagong.pojo.Invitation" >
+    insert into invitation (id, invite_user_id, invite_company_id, 
+      apply_user_id, apply_info, status, 
+      token, invite_time, apply_time, 
+      comfirm_time)
+    values (#{id,jdbcType=VARCHAR}, #{inviteUserId,jdbcType=VARCHAR}, #{inviteCompanyId,jdbcType=VARCHAR}, 
+      #{applyUserId,jdbcType=VARCHAR}, #{applyInfo,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{token,jdbcType=VARCHAR}, #{inviteTime,jdbcType=BIGINT}, #{applyTime,jdbcType=BIGINT}, 
+      #{comfirmTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dagong.pojo.Invitation" >
+    insert into invitation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="inviteUserId != null" >
+        invite_user_id,
+      </if>
+      <if test="inviteCompanyId != null" >
+        invite_company_id,
+      </if>
+      <if test="applyUserId != null" >
+        apply_user_id,
+      </if>
+      <if test="applyInfo != null" >
+        apply_info,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="token != null" >
+        token,
+      </if>
+      <if test="inviteTime != null" >
+        invite_time,
+      </if>
+      <if test="applyTime != null" >
+        apply_time,
+      </if>
+      <if test="comfirmTime != null" >
+        comfirm_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteUserId != null" >
+        #{inviteUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteCompanyId != null" >
+        #{inviteCompanyId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyUserId != null" >
+        #{applyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyInfo != null" >
+        #{applyInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteTime != null" >
+        #{inviteTime,jdbcType=BIGINT},
+      </if>
+      <if test="applyTime != null" >
+        #{applyTime,jdbcType=BIGINT},
+      </if>
+      <if test="comfirmTime != null" >
+        #{comfirmTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dagong.pojo.Invitation" >
+    update invitation
+    <set >
+      <if test="inviteUserId != null" >
+        invite_user_id = #{inviteUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteCompanyId != null" >
+        invite_company_id = #{inviteCompanyId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyUserId != null" >
+        apply_user_id = #{applyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyInfo != null" >
+        apply_info = #{applyInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteTime != null" >
+        invite_time = #{inviteTime,jdbcType=BIGINT},
+      </if>
+      <if test="applyTime != null" >
+        apply_time = #{applyTime,jdbcType=BIGINT},
+      </if>
+      <if test="comfirmTime != null" >
+        comfirm_time = #{comfirmTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dagong.pojo.Invitation" >
+    update invitation
+    set invite_user_id = #{inviteUserId,jdbcType=VARCHAR},
+      invite_company_id = #{inviteCompanyId,jdbcType=VARCHAR},
+      apply_user_id = #{applyUserId,jdbcType=VARCHAR},
+      apply_info = #{applyInfo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      token = #{token,jdbcType=VARCHAR},
+      invite_time = #{inviteTime,jdbcType=BIGINT},
+      apply_time = #{applyTime,jdbcType=BIGINT},
+      comfirm_time = #{comfirmTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

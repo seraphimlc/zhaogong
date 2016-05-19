@@ -135,18 +135,19 @@ public class FollowService {
         return false;
     }
 
-    public boolean dismissFollowUser(String followId,String companyUserId,String userId){
-        List<FollowUser> followUsers = getFollowUser(companyUserId, userId,null);
-
-        if(!ListUtil.isEmpty(followUsers)){
-            for(FollowUser followUser:followUsers){
-                if(followUser.getId().equals(followId)){
-                    followUserMapper.deleteByPrimaryKey(followId);
-                }
-            }
+    public boolean dismissFollowUser(String followId,String companyUserId,String userId) {
+        FollowUser followUser = followUserMapper.selectByPrimaryKey(followId);
+        if (followUser == null) {
+            return false;
         }
-        return true;
+        if (followUser.getCompanyUser().equals(companyUserId) &&
+                followUser.getUserId().equals(userId)) {
+            followCompanyMapper.deleteByPrimaryKey(followId);
+            return true;
+        }
+        return false;
     }
+    
     private FollowUser createFollowUser(String companyUserId, String userId, CompanyUser companyUser) {
         FollowUser followUser = new FollowUser();
         followUser.setCompanyUser(companyUserId);

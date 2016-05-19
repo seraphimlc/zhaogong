@@ -5,11 +5,11 @@ public class CompanyUser {
 
     private String companyId;
 
-    private String username;
+    private String userId;
 
-    private String password;
+    private Integer status;
 
-    private String phone;
+    private Integer version;
 
     public String getId() {
         return id;
@@ -27,27 +27,27 @@ public class CompanyUser {
         this.companyId = companyId == null ? null : companyId.trim();
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
-    public String getPassword() {
-        return password;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public String getPhone() {
-        return phone;
+    public Integer getVersion() {
+        return version;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }
