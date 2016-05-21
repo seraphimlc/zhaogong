@@ -7,14 +7,11 @@ import com.alibaba.rocketmq.client.producer.DefaultMQProducer;
 import com.alibaba.rocketmq.client.producer.SendResult;
 import com.alibaba.rocketmq.common.message.Message;
 import com.alibaba.rocketmq.remoting.exception.RemotingException;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -52,10 +49,5 @@ public class SendMessageService {
         System.out.println("sendResult = " + sendResult.getMsgId() + ":" + sendResult.getSendStatus());
     }
 
-    public static void main(String[] args) {
-        Map map = new HashMap<String,Object>();
-        map.put("aaaa","bbbb");
-        System.out.println("new String(JSON.toJSONBytes(map)) = " + new String(JSON.toJSONBytes(map)));
-    }
 
 }

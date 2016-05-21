@@ -16,11 +16,11 @@ public class BeanValidator {
 
     public static <T> void validate(T object) throws ValidationException{
 
-        //»ñµÃÑéÖ¤Æ÷
+        //è·å¾—éªŒè¯å™¨
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-        //Ö´ĞĞÑéÖ¤
+        //æ‰§è¡ŒéªŒè¯
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(object);
-        //Èç¹ûÓĞÑéÖ¤ĞÅÏ¢£¬Ôò½«µÚÒ»¸öÈ¡³öÀ´°ü×°³ÉÒì³£·µ»Ø
+        //å¦‚æœæœ‰éªŒè¯ä¿¡æ¯ï¼Œåˆ™å°†ç¬¬ä¸€ä¸ªå–å‡ºæ¥åŒ…è£…æˆå¼‚å¸¸è¿”å›
         ConstraintViolation<T> constraintViolation = getFirst(constraintViolations, null);
         if (constraintViolation != null) {
             throw new ValidationException(constraintViolation.getPropertyPath()+constraintViolation.getMessage());

@@ -14,13 +14,11 @@ import com.dagong.user.vo.UserVO;
 import com.dagong.util.IdGenerator;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by liuchang on 16/1/17.
@@ -207,28 +205,6 @@ public class ApplyService {
 
 
         return applyLog;
-    }
-
-    public static void main(String[] args) {
-        ApplyRecord applyRecord = new ApplyRecord();
-        applyRecord.setId("aaa");
-        applyRecord.setCompanyUser("bbb");
-        applyRecord.setDescription("斯蒂芬斯蒂芬斯蒂芬斯蒂芬");
-        applyRecord.setStatus(3);
-        try {
-            Map map = BeanUtils.describe(applyRecord);
-            if (map != null && !map.isEmpty()) {
-                map.forEach((key, value) -> {
-                    System.out.println(key);
-                });
-            }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
     }
 
 

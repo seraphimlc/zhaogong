@@ -29,7 +29,7 @@ public class Company {
 
     private String description;
 
-    private Long version;
+    private int version;
 
     private String modifyUser;
 
@@ -145,11 +145,11 @@ public class Company {
         this.description = description == null ? null : description.trim();
     }
 
-    public Long getVersion() {
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(Long version) {
+    public void setVersion(int version) {
         this.version = version;
     }
 

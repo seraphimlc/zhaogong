@@ -62,7 +62,7 @@ public class InviteService {
             return false;
         }
         InviteRecord inviteRecord = createInviteRecord(userId, jobId, contactId, comment, interviewTime, companyUserId);
-        InviteLog inviteLog = createInviteLog(companyUserId, companyUser.getUsername(), inviteRecord.getId(), STATUS_INIT, STATUS_INIT);
+        InviteLog inviteLog = createInviteLog(companyUserId, companyUser.getCompanyId(), inviteRecord.getId(), STATUS_INIT, STATUS_INIT);
         inviteRecordMapper.insert(inviteRecord);
         inviteLogMapper.insert(inviteLog);
         return true;

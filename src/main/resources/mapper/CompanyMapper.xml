@@ -129,7 +129,7 @@
         #{description,jdbcType=VARCHAR},
       </if>
       <if test="version != null">
-        #{version,jdbcType=BIGINT},
+        #{version,jdbcType=INTEGER},
       </if>
       <if test="modifyUser != null">
         #{modifyUser,jdbcType=VARCHAR},
@@ -203,7 +203,7 @@
       create_time = #{createTime,jdbcType=BIGINT},
       modify_time = #{modifyTime,jdbcType=BIGINT},
       description = #{description,jdbcType=VARCHAR},
-      version = #{version,jdbcType=BIGINT},
+      version = #{version,jdbcType=INTEGER},
       modify_user = #{modifyUser,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>

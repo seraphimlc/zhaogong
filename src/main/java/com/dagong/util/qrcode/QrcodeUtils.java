@@ -1,38 +1,24 @@
 package com.dagong.util.qrcode;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.imageio.ImageIO;
-
 import com.google.zxing.*;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.SystemUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.google.zxing.Reader;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 二维码工具类
@@ -257,14 +243,14 @@ public class QrcodeUtils {
         return parse(new File(filePath));
     }
 
-    public static void main(String[] args) {
-        try {
-            String text = "http://www.baidu.com";
-            File outputFile = new File("/tmp/test.png");
-            QrcodeUtils.gen(text, "/tmp/test.jpg");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void main(String[] args) {
+//        try {
+//            String text = "http://www.baidu.com";
+//            File outputFile = new File("/tmp/test.png");
+//            QrcodeUtils.gen(text, "/tmp/test.jpg");
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

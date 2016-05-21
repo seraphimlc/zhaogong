@@ -1,14 +1,13 @@
 package com.dagong.service;
 
-import com.dagong.mapper.*;
+import com.dagong.mapper.CompanyLogMapper;
+import com.dagong.mapper.CompanyMapper;
+import com.dagong.mapper.CompanyUserLogMapper;
+import com.dagong.mapper.CompanyUserMapper;
 import com.dagong.pojo.Company;
 import com.dagong.pojo.CompanyLog;
-import com.dagong.pojo.CompanyUser;
-import com.dagong.pojo.Contact;
 import com.dagong.util.IdGenerator;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -69,7 +68,7 @@ public class CompanyService {
         company.setStatus(COMPANY_STATUS_INIT);
         company.setCreateUser(userId);
         company.setModifyTime(System.currentTimeMillis());
-        companyMapper.insert(company);
+        companyMapper.insertSelective(company);
         log(company);
         return 1;
     }
